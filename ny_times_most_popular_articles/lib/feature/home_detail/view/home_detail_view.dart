@@ -31,16 +31,18 @@ class HomeDetailView extends StatelessWidget {
                 color: Colors.greenAccent.withOpacity(0.5),
                 spreadRadius: 5,
                 blurRadius: 7,
-                offset: const Offset(0, 3), // changes position of shadow
+                offset: const Offset(0, 3),
               ),
             ]),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ClipRRect(
-                  child: Image.network(
-                    itemsDetail.media?[0].mediaMetadata?[0].url ?? "",
-                  ),
+                  child: itemsDetail.media!.isNotEmpty
+                      ? Image.network(
+                          itemsDetail.media?[0].mediaMetadata?[0].url ?? "",
+                        )
+                      : const Icon(Icons.hourglass_empty),
                 ),
                 SizedBox(
                   height: 50.h,

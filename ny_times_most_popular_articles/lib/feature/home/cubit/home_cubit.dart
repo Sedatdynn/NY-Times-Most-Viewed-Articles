@@ -11,6 +11,7 @@ class HomeCubit extends Cubit<HomeState> {
   final IHomeService homeService;
   List<Results> allArticles = [];
   List<Results> allSortedArticles = [];
+  bool isSorted = false;
 
   Future<void> fetchAllArticles() async {
     try {
@@ -23,26 +24,16 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
-  // void sortListByDate() {
-  //   allSortedArticles = List.from(allArticles);
-  //   allSortedArticles.sort((a, b) => a.publishedDate!.compareTo(b.publishedDate!));
-
-  //   emit(HomeSortedLoaded(allSortedArticles));
-  // }
-
   void sortListByDate() {
-    List<Results> sortedList = List.from(allArticles);
-    bool isAscending = true;
-
-    sortedList.sort((a, b) => a.publishedDate!.compareTo(b.publishedDate!));
-
-    if (isAscending) {
-      sortedList = sortedList.reversed.toList();
+    if (isSorted) {
+      allArticles = allArticles.reversed.toList();
+      emit(HomeSortedLoaded(allArticles));
+    } else {
+      allSortedArticles = List.from(allArticles);
+      allSortedArticles.sort((a, b) => a.publishedDate!.compareTo(b.publishedDate!));
+      allArticles = allSortedArticles;
+      isSorted = true;
+      emit(HomeSortedLoaded(allArticles));
     }
-
-    allArticles = sortedList;
-    isAscending = !isAscending;
-
-    emit(HomeSortedLoaded(allArticles));
   }
 }

@@ -42,9 +42,9 @@ class HomeView extends StatelessWidget {
                     child: CircularProgressIndicator(),
                   );
                 case HomeSortedLoaded():
-                  return _MainBody();
+                  return const _MainBody();
                 case HomeLoaded():
-                  return _MainBody();
+                  return const _MainBody();
                 case HomeFailure():
                   return const Center(child: Text("Beklenmedik Bir Hata ile Karşılaşıldı!"));
                 default:
